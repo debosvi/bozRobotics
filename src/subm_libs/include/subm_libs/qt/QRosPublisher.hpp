@@ -1,17 +1,18 @@
 /**
- * \file        qros_publisher.h
+ * \file        QRosPublisher.hpp
  * \author      Vincent de RIBOU <v.debossoreillederibou@akka.eu>
  * \version     0.1
  * \date        30th July 2018
- * \copyright   Renault SAS.
- * \brief       Definition of public qros_publisher class.
+ * \copyright   BozRobotics.
+ * \brief       Definition of public QRosPublisher class.
  */
 
 #pragma once
 
-class QObject;
+#include <ros/publisher.h>
+#include <ros/node_handle.h>
 
-namespace adcc_libs {
+namespace subm_libs {
 namespace qt {
     
 class QRosPublisherBase
@@ -40,4 +41,4 @@ private:
 };
 
 } // namespace qt
-} // namespace adcc_libs
+} // namespace subm_libs

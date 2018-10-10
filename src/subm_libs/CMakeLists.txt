@@ -22,6 +22,9 @@ include(ros_compliancy.cmake)
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
+set(INCLUDE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SUBM_LIB_NAME ${PROJECT_NAME})
+
 ################################################
 ## Declare ROS messages, services and actions ##
 ################################################
@@ -103,7 +106,7 @@ include(ros_compliancy.cmake)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-    INCLUDE_DIRS include
+    INCLUDE_DIRS ${INCLUDE_ROOT_PATH}
     LIBRARIES subm_libs
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
@@ -113,10 +116,11 @@ catkin_package(
 ## Build ##
 ###########
 
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-    include
+    ${INCLUDE_ROOT_PATH}
     ${catkin_INCLUDE_DIRS}
 )
 
@@ -150,30 +154,8 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-set(${PROJECT_NAME}_MOC_HEADERS
-    include/subm_libs/qt/qros_node.h
-    include/subm_libs/qt/qros_node_singleton.h
-)
-
-CUSTOM_QT_WRAP_CPP(${PROJECT_NAME}_MOC_SRC_H
-    ${${PROJECT_NAME}_MOC_HEADERS}
-)
-
-## Declare a C++ library
-add_library(${PROJECT_NAME} SHARED
-    # MOCs 
-    ${${PROJECT_NAME}_MOC_SRC_H}
-
-    # QT
-    src/qt/qros_node.cpp
-    src/qt/qros_node_singleton.cpp
-    
-)
-
-target_link_libraries(${PROJECT_NAME}
-    ${catkin_LIBRARIES}
-    ${CUSTOM_QT_LIBRARIES}
-)
+add_subdirectory(src)
+add_subdirectory(test)
 
 #############
 ## Install ##

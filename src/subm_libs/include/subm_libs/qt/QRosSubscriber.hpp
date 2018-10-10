@@ -1,15 +1,26 @@
-/*
- * qros_subscriber.h
- *
- *  Created on: 15 juin 2016
- *      Author: bonnetst
+/**
+ * \file        QRosSubscriber.hpp
+ * \author      Vincent de RIBOU <v.debossoreillederibou@akka.eu>
+ * \version     0.1
+ * \date        30th July 2018
+ * \copyright   BozRobotics.
+ * \brief       Definition of public QRosSubscriber class.
  */
 
 #pragma once
 
+#include <QtCore/QMetaObject> 
+#include <QtCore/QMetaType> 
+#include <QtCore/QMetaMethod> 
+
+#ifndef Q_MOC_RUN
+#include <ros/ros.h>
+#include <ros/xmlrpc_manager.h>
+#endif
+
 class QObject;
 
-namespace adcc_libs {
+namespace subm_libs {
 namespace qt {
 
 template <typename T>
@@ -19,7 +30,7 @@ struct TypeString
 };
 
 #define QROS_SUBSCRIBER_DECLARE_METATYPE(Type) \
-namespace adcc_libs { \
+namespace subm_libs { \
 namespace qt { \
 template<> \
 struct TypeString<Type> \
@@ -81,4 +92,4 @@ private:
 };
 
 } // namespace qt
-} // namespace adcc_libs
+} // namespace subm_libs

@@ -1,8 +1,10 @@
-/*
- * qros_node.h
- *
- *  Created on: 14 juin 2016
- *      Author: bonnetst
+/**
+ * \file        QRosNode.hpp
+ * \author      Vincent de RIBOU <v.debossoreillederibou@akka.eu>
+ * \version     0.1
+ * \date        30th July 2018
+ * \copyright   BozRobotics.
+ * \brief       Definition of public QRosNode class.
  */
 
 #pragma once
@@ -19,12 +21,12 @@
 #include <ros/xmlrpc_manager.h>
 #endif
 
-#include <subm_libs/qt/qros_subscriber.h>
-#include <subm_libs/qt/qros_publisher.h>
+#include <subm_libs/qt/QRosSubscriber.hpp>
+#include <subm_libs/qt/QRosPublisher.hpp>
 
 class QSocketNotifier;
 
-namespace adcc_libs {
+namespace subm_libs {
 namespace qt {
     
 class QRosNode : public QObject {
@@ -87,4 +89,4 @@ private:
 };
 
 } // namespace qt
-} // namespace adcc_libs
+} // namespace subm_libs

@@ -1,19 +1,21 @@
-/*
- * qros_node.cpp
- *
- *  Created on: 20 juin 2016
- *      Author: bonnetst
+/**
+ * \file        QRosNode.cpp
+ * \author      Vincent de RIBOU <v.debossoreillederibou@akka.eu>
+ * \version     0.1
+ * \date        30th July 2018
+ * \copyright   BozRobotics.
+ * \brief       Implementation of public QRosNode class.
  */
 
 #include <QtCore/QSocketNotifier>
 
-#include <subm_libs/qt/qros_node.h>
+#include <subm_libs/qt/QRosNode.hpp>
 
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
-namespace adcc_libs {
+namespace subm_libs {
 namespace qt {
 
 /* Static members definitions */
@@ -123,4 +125,4 @@ void QRosNode::sigIntHandler(int sig_num)
 }
 
 }  // namespace qt
-}  // namespace adcc_libs
+}  // namespace subm_libs
