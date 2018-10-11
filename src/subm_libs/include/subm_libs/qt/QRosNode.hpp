@@ -19,8 +19,7 @@
 
 #include <subm_libs/qt/QRosSubscriber.hpp>
 #include <subm_libs/qt/QRosPublisher.hpp>
-
-class QSocketNotifier;
+#include <subm_libs/qt/QSignalHandler.hpp>
 
 namespace subm_libs {
 namespace qt {
@@ -66,22 +65,18 @@ public:
 public Q_SLOTS:
     void unsubscribe(QObject* receiver);
     void shutdown();
-    void handleSigInt();
 
 Q_SIGNALS:
     void rosShutdown();
 
 private:
-  /* Signal handling members */
-  static int sigIntFd[2];
-  QSocketNotifier *sigIntNotifier;
+    QSignalHandler _sigs;
+    QSharedPointer<ros::AsyncSpinner> spinner_;
+    
+    std::multimap<QObject*, boost::shared_ptr<QRosSubscriberBase> > subscribers_;
+    std::multimap<std::string , boost::shared_ptr<QRosPublisherBase> > publishers_;
 
-  ros::AsyncSpinner* spinner_;
-  std::multimap<QObject*, boost::shared_ptr<QRosSubscriberBase> > subscribers_;
-  std::multimap<std::string , boost::shared_ptr<QRosPublisherBase> > publishers_;
-
-  void shutdownCallback(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
-  static void sigIntHandler(int sig_num);
+    void shutdownCallback(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
 };
 
 } // namespace qt

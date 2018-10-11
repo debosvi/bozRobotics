@@ -31,6 +31,7 @@ int main(int ac, char** av) {
     qrn.init(ac, av, node_name);
     
     qrn.subscribe<std_msgs::UInt16>(topic, size, &test, SLOT(onReceive(const std_msgs::UInt16ConstPtr&)));
+    QObject::connect(&qrn, SIGNAL(rosShutdown()), &app, SLOT(quit()));
     
     return app.exec();
 }
