@@ -1,5 +1,6 @@
 
 set(${SUBM_LIB_NAME}_MOC_HEADERS
+    ${INCLUDE_ROOT_PATH}/subm_libs/qt/QSignalHandler.hpp
     ${INCLUDE_ROOT_PATH}/subm_libs/qt/QRosNode.hpp
     ${INCLUDE_ROOT_PATH}/subm_libs/qt/QRosNodeSingleton.hpp
 )
@@ -14,6 +15,7 @@ add_library(${SUBM_LIB_NAME} SHARED
     ${${SUBM_LIB_NAME}_MOC_SRC_H}
 
     # QT
+    qt/QSignalHandler.cpp
     qt/QRosNode.cpp
     qt/QRosNodeSingleton.cpp
     

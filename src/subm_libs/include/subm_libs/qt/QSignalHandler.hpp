@@ -9,9 +9,7 @@
 
 #pragma once
 
-#include <QtCore/QMetaObject> 
-#include <QtCore/QMetaType> 
-#include <QtCore/QMetaMethod> 
+#include <QtCore/QSharedPointer> 
 
 class QSocketNotifier;
 
@@ -23,8 +21,12 @@ class QSignalHandler : public QObject {
 
 public:
     explicit QSignalHandler(QObject* parent = 0);
-
     virtual ~QSignalHandler();
+    
+    void init(void);
+    
+private Q_SLOTS:
+    void handleSignal();
 
 Q_SIGNALS:
     void sigINT();
@@ -33,10 +35,10 @@ Q_SIGNALS:
 
 private:
   /* Signal handling members */
-  static int sigFds[2];
-  QSocketNotifier *sigIntNotifier;
+  static int signalsFds[2];
+  QSharedPointer<QSocketNotifier> signalsNotifier;
 
-  static void sigIntHandler(int sig_num);
+  static void sigHandler(int sig_num);
 };
 
 } // namespace qt

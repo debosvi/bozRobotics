@@ -78,3 +78,30 @@ target_link_libraries(${QSUB_NAME}
     ${CUSTOM_QT_LIBRARIES}
     ${SUBM_LIB_NAME}
 )
+
+
+###############################################################################
+set(QSH_NAME testQSignalHandler)
+
+set(${QSH_NAME}_MOC_HEADERS
+#     testQRosSubscriber.hpp
+)
+
+CUSTOM_QT_WRAP_CPP(${QSH_NAME}_MOC_SRC_H
+    ${${QSH_NAME}_MOC_HEADERS}
+)
+
+## Declare a C++ library
+add_executable(${QSH_NAME}
+    # MOCs 
+#     ${${QSH_NAME}_MOC_SRC_H}
+
+    # QT
+    testQSignalHandler.cpp
+)
+
+target_link_libraries(${QSH_NAME}
+    ${catkin_LIBRARIES}
+    ${CUSTOM_QT_LIBRARIES}
+    ${SUBM_LIB_NAME}
+)
