@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# catkin dirs
+build*/
+devel/
+
+\.catkin_workspace
+
+src/CMakeLists\.txt
