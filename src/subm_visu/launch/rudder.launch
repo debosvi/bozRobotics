@@ -1,0 +1,7 @@
+<launch>
+
+    <node pkg ="subm_visu" name="rudder_node" output="screen" type="rudder_node">
+        <param name="package_dir" value="$(find subm_visu)" />
+    </node>
+
+</launch>
