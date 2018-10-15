@@ -40,30 +40,13 @@ public:
     void init(int argc, char* argv[], const std::string& name);
 
     template<typename MessageType>
-    void subscribe(const char* topic, uint32_t queue_size, QObject* receiver, const char* method)
-    {
-        subscribers_.insert(std::make_pair(receiver, boost::make_shared<QRosSubscriber<MessageType>>(topic, queue_size, receiver, method)));
-        if (subscribers_.count(receiver) == 1) {
-            connect(receiver, SIGNAL(destroyed(QObject*)), SLOT(unsubscribe(QObject*)), Qt::ConnectionType::DirectConnection);
-        }
-    }
+    void subscribe(const char* topic, uint32_t queue_size, QObject* receiver, const char* method);
 
     template<typename MessageType>
-    void advertise(const std::string topic, uint32_t queue_size) {
-        publishers_.insert(std::make_pair(::ros::message_traits::DataType<MessageType>::value(), boost::make_shared<QRosPublisher<MessageType>>(topic, queue_size)));
-    }
-
+    void advertise(const std::string topic, uint32_t queue_size);
+    
     template<typename MessageType>
-    void publish(MessageType& msg) {
-        std::multimap<std::string, boost::shared_ptr<QRosPublisherBase>>::iterator it = publishers_.find(::ros::message_traits::DataType<MessageType>::value());        
-        if(it == publishers_.end()) {
-            ROS_ERROR("You must advertise message before using publish method\n");
-            return;
-        }
-        boost::shared_ptr<QRosPublisherBase> base =it->second;
-        QRosPublisher<MessageType>* pub = (QRosPublisher<MessageType>*)(base.get());
-        pub->publisher().publish(msg);
-    }
+    void publish(MessageType& msg);
 
 public Q_SLOTS:
     void unsubscribe(QObject* receiver);
@@ -82,5 +65,8 @@ private:
     void shutdownCallback(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
 };
 
+
 } // namespace qt
 } // namespace subm_libs
+
+#include <subm_libs/qt/QRosNode.tpp>
