@@ -81,6 +81,33 @@ target_link_libraries(${QSUB_NAME}
 
 
 ###############################################################################
+set(QSUBSING_NAME testQRosNodeSingleton)
+
+set(${QSUBSING_NAME}_MOC_HEADERS
+    testQRosSubscriber.hpp
+)
+
+CUSTOM_QT_WRAP_CPP(${QSUBSING_NAME}_MOC_SRC_H
+    ${${QSUBSING_NAME}_MOC_HEADERS}
+)
+
+## Declare a C++ library
+add_executable(${QSUBSING_NAME}
+    # MOCs 
+    ${${QSUBSING_NAME}_MOC_SRC_H}
+
+    # QT
+    testQRosNodeSingleton.cpp
+)
+
+target_link_libraries(${QSUBSING_NAME}
+    ${catkin_LIBRARIES}
+    ${CUSTOM_QT_LIBRARIES}
+    ${SUBM_LIB_NAME}
+)
+
+
+###############################################################################
 set(QSH_NAME testQSignalHandler)
 
 set(${QSH_NAME}_MOC_HEADERS
