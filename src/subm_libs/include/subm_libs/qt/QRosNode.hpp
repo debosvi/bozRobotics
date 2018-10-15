@@ -17,9 +17,12 @@
 #include <ros/xmlrpc_manager.h>
 #endif
 
+#include <QtCore/QSharedPointer> 
+
 #include <subm_libs/qt/QRosSubscriber.hpp>
 #include <subm_libs/qt/QRosPublisher.hpp>
 #include <subm_libs/qt/QSignalHandler.hpp>
+
 
 namespace subm_libs {
 namespace qt {

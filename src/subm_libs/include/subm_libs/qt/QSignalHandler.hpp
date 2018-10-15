@@ -9,15 +9,22 @@
 
 #pragma once
 
-#include <QtCore/QSharedPointer> 
-
-class QSocketNotifier;
+#include <QtCore/QObject>
+#include <QtCore/QScopedPointer>
 
 namespace subm_libs {
 namespace qt {
     
+namespace priv { 
+class QSignalHandlerPrivate;
+} // ns priv
+ 
+using namespace priv;
+
 class QSignalHandler : public QObject {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(QSignalHandler)
+    Q_DISABLE_COPY(QSignalHandler)
 
 public:
     explicit QSignalHandler(QObject* parent = 0);
@@ -25,20 +32,14 @@ public:
     
     void init(void);
     
-private Q_SLOTS:
-    void handleSignal();
-
 Q_SIGNALS:
     void sigINT();
     void sigHUP();
     void sigTERM();
 
 private:
-  /* Signal handling members */
-  static int signalsFds[2];
-  QSharedPointer<QSocketNotifier> signalsNotifier;
-
-  static void sigHandler(int sig_num);
+    explicit QSignalHandler(priv::QSignalHandlerPrivate&, QObject *parent);
+    QScopedPointer<priv::QSignalHandlerPrivate> d_ptr;
 };
 
 } // namespace qt
