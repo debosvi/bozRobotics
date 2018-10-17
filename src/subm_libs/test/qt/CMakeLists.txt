@@ -132,3 +132,30 @@ target_link_libraries(${QSH_NAME}
     ${CUSTOM_QT_LIBRARIES}
     ${SUBM_LIB_NAME}
 )
+
+
+###############################################################################
+set(QSTM_NAME testQStateMachine)
+
+set(${QSTM_NAME}_MOC_HEADERS
+#     testQRosSubscriber.hpp
+)
+
+CUSTOM_QT_WRAP_CPP(${QSTM_NAME}_MOC_SRC_H
+    ${${QSTM_NAME}_MOC_HEADERS}
+)
+
+## Declare a C++ library
+add_executable(${QSTM_NAME}
+    # MOCs 
+#     ${${QSTM_NAME}_MOC_SRC_H}
+
+    # QT
+    testQStateMachine.cpp
+)
+
+target_link_libraries(${QSTM_NAME}
+    ${catkin_LIBRARIES}
+    ${CUSTOM_QT_LIBRARIES}
+    ${SUBM_LIB_NAME}
+)

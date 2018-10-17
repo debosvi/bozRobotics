@@ -2,10 +2,16 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/qt)
 
 set(${SUBM_LIB_NAME}_MOC_HEADERS
-    ${INCLUDE_ROOT_PATH}/subm_libs/qt/QSignalHandler.hpp
+    ## public classes
     ${INCLUDE_ROOT_PATH}/subm_libs/qt/QRosNode.hpp
     ${INCLUDE_ROOT_PATH}/subm_libs/qt/QRosNodeSingleton.hpp
+    ${INCLUDE_ROOT_PATH}/subm_libs/qt/QSignalHandler.hpp
+    ${INCLUDE_ROOT_PATH}/subm_libs/qt/QStateMachine.hpp
+    
+    ## private classes
     ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QSignalHandlerPrivate.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QStateMachinePrivate.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QStringTransition.hpp
 )
 
 CUSTOM_QT_WRAP_CPP(${SUBM_LIB_NAME}_MOC_SRC_H
@@ -17,11 +23,15 @@ add_library(${SUBM_LIB_NAME} SHARED
     # MOCs 
     ${${SUBM_LIB_NAME}_MOC_SRC_H}
 
-    # QT
+    # private QT
     qt/priv/QSignalHandlerPrivate.cpp
-    qt/QSignalHandler.cpp
+    qt/priv/QStateMachinePrivate.cpp
+
+    # public QT
     qt/QRosNode.cpp
     qt/QRosNodeSingleton.cpp
+    qt/QSignalHandler.cpp
+    qt/QStateMachine.cpp
     
 )
 
