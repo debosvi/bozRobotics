@@ -138,7 +138,7 @@ target_link_libraries(${QSH_NAME}
 set(QSTM_NAME testQStateMachine)
 
 set(${QSTM_NAME}_MOC_HEADERS
-#     testQRosSubscriber.hpp
+    testQStateMachine.hpp
 )
 
 CUSTOM_QT_WRAP_CPP(${QSTM_NAME}_MOC_SRC_H
@@ -148,7 +148,7 @@ CUSTOM_QT_WRAP_CPP(${QSTM_NAME}_MOC_SRC_H
 ## Declare a C++ library
 add_executable(${QSTM_NAME}
     # MOCs 
-#     ${${QSTM_NAME}_MOC_SRC_H}
+    ${${QSTM_NAME}_MOC_SRC_H}
 
     # QT
     testQStateMachine.cpp
