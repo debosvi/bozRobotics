@@ -42,7 +42,8 @@ public:
 Q_SIGNALS:
     void enterState(const QString& state);
     void exitState(const QString& state);
-//     void finished();
+    void started();
+    void finished();
     
 private:
     explicit QStateMachine(priv::QStateMachinePrivate&, QObject *parent);

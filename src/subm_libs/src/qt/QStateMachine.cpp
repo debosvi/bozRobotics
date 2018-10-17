@@ -24,33 +24,9 @@ void QStateMachine::init() {
     
     d->_states.clear();
     d->_transitions.clear();
-    
-    
-#if 0
-    d->s1 = new QState();
-    d->s2 = new QState();
-    d->done = new QFinalState();
 
-    QStringTransition *t1 = new QStringTransition("Hello");
-    t1->setTargetState(d->s2);
-    d->s1->addTransition(t1);
-    
-    QStringTransition *t2 = new QStringTransition("world");
-    t2->setTargetState(d->done);
-    d->s2->addTransition(t2);
-
-    d->_machine->addState(d->s1);
-    d->_machine->addState(d->s2);
-    d->_machine->addState(d->done);
-    d->_machine->setInitialState(d->s1);
-
-    connect(d->s1, SIGNAL(entered()), d, SLOT(onStateEntered()));
-    connect(d->s2, SIGNAL(entered()), d, SLOT(onStateEntered()));
-    connect(d->done, SIGNAL(entered()), d, SLOT(onStateEntered()));    
-    connect(d->s1, SIGNAL(exited()), d, SLOT(onStateExited()));
-    connect(d->s2, SIGNAL(exited()), d, SLOT(onStateExited()));
-    connect(d->done, SIGNAL(exited()), d, SLOT(onStateExited()));    
-#endif
+    QObject::connect(d->_machine.data(), SIGNAL(started()), this, SIGNAL(started()));
+    QObject::connect(d->_machine.data(), SIGNAL(finished()), this, SIGNAL(finished()));
 }
 
 bool QStateMachine::addState(const QString& state, const bool first) {
@@ -99,6 +75,7 @@ bool QStateMachine::addTransitionToFinal(const QString& trans, const QString& fr
         
             d->addNewState("", d->_done, true);            
             d->addNewTransition(trans, sfrom, d->_done);
+            
             return true;
         }
         // 'from' and/or 'done' states are missing

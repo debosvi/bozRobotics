@@ -59,6 +59,8 @@ int main(int ac, char** av) {
         std::cerr << "unable to add transition to state done" << std::endl;
     }    
     
+    QObject::connect(&m, SIGNAL(finished()), &app, SLOT(quit()));
+    
     m.start();
     
     QObject::connect(&m, &QStateMachine::enterState, &onStateEntered);
