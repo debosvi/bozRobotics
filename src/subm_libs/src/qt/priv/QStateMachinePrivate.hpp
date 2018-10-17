@@ -15,6 +15,7 @@
 #include <QtCore/QFinalState>
 
 #include <subm_libs/qt/QStateMachine.hpp> 
+#include "priv/QStringTransition.hpp"
 
 namespace subm_libs {
 namespace qt {
@@ -31,14 +32,19 @@ public:
     
 private Q_SLOTS:
     void onStateEntered();
+    void onStateExited();    
     
-    
+private:
+    void addNewState(const QString& state, QAbstractState* p, const bool final=false);
+    void addNewTransition(const QString& trans, QState* from, QAbstractState* to);    
+    void onStateGeneric(const bool enter=true);    
+
 private:
     QStateMachine *q_ptr;
     QSharedPointer<::QStateMachine> _machine;
-    QState *s1;
-    QState *s2;
-    QFinalState *done;
+    QMap<QString, QState*> _states;
+    QList<QString> _transitions;
+    QFinalState *_done;
 };
 
 } // namespace priv

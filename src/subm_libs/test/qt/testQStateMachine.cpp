@@ -14,19 +14,26 @@ const char *node_name = "mytopic_subscriber2";
 QStateMachine m;
 int i=0;
     
-void onStateChanged(QString name) {
-    std::cerr << __FUNCTION__ << ": " << name.toStdString() << std::endl;
+void onStateEntered(QString name) {
+    std::cerr << __PRETTY_FUNCTION__ << ": " << name.toStdString() << std::endl;
+}
+
+void onStateExited(QString name) {
+    std::cerr << __PRETTY_FUNCTION__ << ": " << name.toStdString() << std::endl;
 }
 
 void onTimeout() {
-    std::cerr << __FUNCTION__ << std::endl;
+    std::cerr << __PRETTY_FUNCTION__ << std::endl;
     if(!i) {
-        m.postEvent("Hello");
+        std::cerr << "post tos2" << std::endl;
+        m.postTransition("toS2");
         QTimer::singleShot(500, &onTimeout);
         i++;
     }
-    else
-        m.postEvent("world");
+    else {
+        std::cerr << "post toDone" << std::endl;
+        m.postTransition("toDone");
+    }
 }
 
 int main(int ac, char** av) {
@@ -35,9 +42,27 @@ int main(int ac, char** av) {
     QCoreApplication::setApplicationVersion("1.0");
     
     m.init();
+    
+    if(m.addState("s1", true)==false) {
+        std::cerr << "unable to add state 1" << std::endl;
+    }
+    
+    if(m.addState("s2")==false) {
+        std::cerr << "unable to add state 2" << std::endl;
+    }
+    
+    if(m.addTransition("toS2", "s1", "s2")==false) {
+        std::cerr << "unable to add transition to state 2" << std::endl;
+    }
+    
+    if(m.addTransitionToFinal("toDone", "s2")==false) {
+        std::cerr << "unable to add transition to state done" << std::endl;
+    }    
+    
     m.start();
     
-    QObject::connect(&m, &QStateMachine::stateChanged, &onStateChanged);
+    QObject::connect(&m, &QStateMachine::enterState, &onStateEntered);
+    QObject::connect(&m, &QStateMachine::exitState, &onStateExited);
     QTimer::singleShot(500, &onTimeout);
     
     return app.exec();

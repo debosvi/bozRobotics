@@ -33,10 +33,16 @@ public:
     void init();
     void start();
     
-    void postEvent(const QString& event);
+    bool addState(const QString& state, const bool first=false);
+    bool addTransition(const QString& trans, const QString& from, const QString& to);    
+    bool addTransitionToFinal(const QString& trans, const QString& from);    
+    
+    void postTransition(const QString& trans);
     
 Q_SIGNALS:
-    void stateChanged(QString name);
+    void enterState(const QString& state);
+    void exitState(const QString& state);
+//     void finished();
     
 private:
     explicit QStateMachine(priv::QStateMachinePrivate&, QObject *parent);
