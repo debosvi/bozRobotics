@@ -15,7 +15,7 @@
 #include <QtCore/QFinalState>
 
 #include <subm_libs/qt/QStateMachine.hpp> 
-#include "priv/QStringTransition.hpp"
+#include "priv/QLocalTransition.hpp"
 
 namespace subm_libs {
 namespace qt {
@@ -35,15 +35,15 @@ private Q_SLOTS:
     void onStateExited();    
     
 private:
-    void addNewState(const QString& state, QAbstractState* p, const bool final=false);
-    void addNewTransition(const QString& trans, QState* from, QAbstractState* to);    
+    void addNewState(const QStateIdentifier state, QAbstractState* p, const bool final=false);
+    void addNewTransition(const QTransitionIdentifier trans, QState* from, QAbstractState* to);    
     void onStateGeneric(const bool enter=true);    
 
 private:
     QStateMachine *q_ptr;
     QSharedPointer<::QStateMachine> _machine;
-    QMap<QString, QState*> _states;
-    QList<QString> _transitions;
+    QMap<QStateIdentifier, QState*> _states;
+    QList<QTransitionIdentifier> _transitions;
     QFinalState *_done;
 };
 

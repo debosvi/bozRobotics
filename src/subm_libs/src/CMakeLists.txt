@@ -11,7 +11,7 @@ set(${SUBM_LIB_NAME}_MOC_HEADERS
     ## private classes
     ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QSignalHandlerPrivate.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QStateMachinePrivate.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QStringTransition.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qt/priv/QLocalTransition.hpp
 )
 
 CUSTOM_QT_WRAP_CPP(${SUBM_LIB_NAME}_MOC_SRC_H

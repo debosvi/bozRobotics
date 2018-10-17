@@ -29,7 +29,7 @@ void QStateMachine::init() {
     QObject::connect(d->_machine.data(), SIGNAL(finished()), this, SIGNAL(finished()));
 }
 
-bool QStateMachine::addState(const QString& state, const bool first) {
+bool QStateMachine::addState(const QStateIdentifier state, const bool first) {
     Q_D(QStateMachine);
 
     if(!d->_states.contains(state)) {
@@ -46,7 +46,7 @@ bool QStateMachine::addState(const QString& state, const bool first) {
     return false;
 }
 
-bool QStateMachine::addTransition(const QString& trans, const QString& from, const QString& to) {
+bool QStateMachine::addTransition(const QTransitionIdentifier trans, const QStateIdentifier from, const QStateIdentifier to) {
     Q_D(QStateMachine);
 
     if(!d->_transitions.contains(trans)) {
@@ -65,7 +65,7 @@ bool QStateMachine::addTransition(const QString& trans, const QString& from, con
     return false;    
 }
 
-bool QStateMachine::addTransitionToFinal(const QString& trans, const QString& from) {
+bool QStateMachine::addTransitionToFinal(const QTransitionIdentifier trans, const QStateIdentifier from) {
     Q_D(QStateMachine);
 
     if(!d->_transitions.contains(trans)) {
@@ -73,7 +73,7 @@ bool QStateMachine::addTransitionToFinal(const QString& trans, const QString& fr
             QState* sfrom = d->_states[from];
             d->_done = new QFinalState();
         
-            d->addNewState("", d->_done, true);            
+            d->addNewState(0, d->_done, true);            
             d->addNewTransition(trans, sfrom, d->_done);
             
             return true;
@@ -91,9 +91,9 @@ void QStateMachine::start() {
     d->_machine->start();
 }
 
-void QStateMachine::postTransition(const QString& event) {
+void QStateMachine::postTransition(const QTransitionIdentifier event) {
     Q_D(QStateMachine);
-    d->_machine->postEvent(new QStringEvent(event));
+    d->_machine->postEvent(new QLocalEvent(event));
 }
 
 }  // namespace qt

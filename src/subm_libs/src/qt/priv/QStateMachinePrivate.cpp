@@ -27,7 +27,7 @@ QStateMachinePrivate::QStateMachinePrivate(QStateMachine *q, QObject* parent) :
 QStateMachinePrivate::~QStateMachinePrivate() {
 }
 
-void QStateMachinePrivate::addNewState(const QString& state, QAbstractState* p, const bool final) {
+void QStateMachinePrivate::addNewState(const QStateIdentifier state, QAbstractState* p, const bool final) {
     // add to _machine
     _machine->addState(p);
 
@@ -41,9 +41,9 @@ void QStateMachinePrivate::addNewState(const QString& state, QAbstractState* p, 
     connect(p, SIGNAL(exited()), this, SLOT(onStateExited()));        
 }
 
-void QStateMachinePrivate::addNewTransition(const QString& trans, QState* from, QAbstractState* to) {
+void QStateMachinePrivate::addNewTransition(const QTransitionIdentifier trans, QState* from, QAbstractState* to) {
     // creates _transitions
-    QStringTransition *t = new QStringTransition(trans);
+    QLocalTransition *t = new QLocalTransition(trans);
     t->setTargetState(to);
     from->addTransition(t);            
     
@@ -57,7 +57,7 @@ void QStateMachinePrivate::onStateGeneric(const bool enter) {
     QObject *obj = this->sender();
     QState *sobj=(QState*)obj;
     
-    QMap<QString, QState*>::iterator it;
+    QMap<QStateIdentifier, QState*>::iterator it;
     
     for (it = _states.begin(); it != _states.end(); ++it) {
 //         std::cerr << it.key().toStdString() << std::endl;
@@ -70,8 +70,8 @@ void QStateMachinePrivate::onStateGeneric(const bool enter) {
     }
     
     if(!emitted && (obj==_done) ) {
-        if(enter) Q_EMIT q->enterState("done");            
-        else Q_EMIT q->exitState("done");
+        if(enter) Q_EMIT q->enterState(0);            
+        else Q_EMIT q->exitState(0);
     }
     
 }

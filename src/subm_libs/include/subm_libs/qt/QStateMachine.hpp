@@ -21,6 +21,9 @@ class QStateMachinePrivate;
  
 using namespace priv;
 
+typedef unsigned short QStateIdentifier;
+typedef unsigned short QTransitionIdentifier;
+
 class QStateMachine : public QObject {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QStateMachine)
@@ -33,15 +36,15 @@ public:
     void init();
     void start();
     
-    bool addState(const QString& state, const bool first=false);
-    bool addTransition(const QString& trans, const QString& from, const QString& to);    
-    bool addTransitionToFinal(const QString& trans, const QString& from);    
+    bool addState(const QStateIdentifier state, const bool first=false);
+    bool addTransition(const QTransitionIdentifier trans, const QStateIdentifier from, const QStateIdentifier to);    
+    bool addTransitionToFinal(const QTransitionIdentifier trans, const QStateIdentifier from);    
     
-    void postTransition(const QString& trans);
+    void postTransition(const QTransitionIdentifier trans);
     
 Q_SIGNALS:
-    void enterState(const QString& state);
-    void exitState(const QString& state);
+    void enterState(const QStateIdentifier state);
+    void exitState(const QStateIdentifier state);
     void started();
     void finished();
     
