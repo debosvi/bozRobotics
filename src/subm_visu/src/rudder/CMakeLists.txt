@@ -12,7 +12,10 @@ add_executable(${SUBM_RUDDER_APP_NAME}
     # MOCs 
     ${${SUBM_RUDDER_APP_NAME}_MOC_SRC_H}
 
-    # QT
+    # Rudder
+    Rudder.cpp
+    RudderMarker.cpp
+    
     test.cpp    
     main.cpp    
 )

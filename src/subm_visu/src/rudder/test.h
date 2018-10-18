@@ -4,8 +4,9 @@
 #include <QtCore/QObject>
 
 #include <ros/publisher.h>
+#include "subm_visu/RudderMarker.hpp"
 
-namespace subm {
+namespace subm_visu {
 
 class TestRudder : public QObject {
     Q_OBJECT
@@ -23,10 +24,11 @@ private Q_SLOTS:
 private:
     QObject* _parent;
     ros::Publisher _pub;  
+    subm_visu::RudderMarker _rudder;
     double _x;
     double _p;
     double _r;
     static const int _upt_ms;
 };
     
-} 
+} // ns subm_visu

@@ -108,7 +108,7 @@ set(SUBM_RUDDER_APP_NAME rudder_node)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#     INCLUDE_DIRS ${INCLUDE_ROOT_PATH}
+    INCLUDE_DIRS ${INCLUDE_ROOT_PATH}
 #     LIBRARIES ${SUBM_RUDDER_LIB_NAME}
     CATKIN_DEPENDS subm_libs
 #  DEPENDS system_lib

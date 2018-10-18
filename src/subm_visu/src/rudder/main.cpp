@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
         &app, SLOT(quit())
         );
     
-    subm::TestRudder test(&app);
+    subm_visu::TestRudder test(&app);
     
     test.init();
     test.start();        
