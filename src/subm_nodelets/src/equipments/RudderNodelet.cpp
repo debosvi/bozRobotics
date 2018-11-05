@@ -19,13 +19,19 @@ void RudderNodelet::onInit() {
     _done = true;
     
     ros::NodeHandle pnh = getPrivateNodeHandle();
-    _timer = pnh.createTimer(ros::Duration(0.01f), boost::bind(&RudderNodelet::timerCb, this, _1));
+    
+    pnh.param<int>("refresh_rate", _refresh_rate, 10);
+    NODELET_INFO("%s: refresh_rate (%d)", __PRETTY_FUNCTION__, _refresh_rate);
+    pnh.param<bool>("show_more", _show_more, false);
+    NODELET_INFO("%s: show_more (%d)", __PRETTY_FUNCTION__, _show_more);
+    
+    _timer = pnh.createTimer(ros::Duration(1.0f/_refresh_rate), boost::bind(&RudderNodelet::timerCb, this, _1));
     _pub = pnh.advertise<subm_nodelets::RudderReport>("report", 10);
     _sub = pnh.subscribe<subm_nodelets::RudderCommand>("command", 10, boost::bind(&RudderNodelet::messageCb, this, _1));    
 }
 
 void RudderNodelet::messageCb(const subm_nodelets::RudderCommandConstPtr& message) {
-    NODELET_DEBUG(__PRETTY_FUNCTION__);
+//     NODELET_DEBUG(__PRETTY_FUNCTION__);
     if(message->target<subm_nodelets::RudderReport::RDR_VALUE_MIN) {
         NODELET_ERROR("%s: target not reachable (%d>%d)", __PRETTY_FUNCTION__, message->target, subm_nodelets::RudderReport::RDR_VALUE_MIN);   
         return;
@@ -44,7 +50,7 @@ void RudderNodelet::timerCb(const ros::TimerEvent& event) {
 //     NODELET_DEBUG("%s: values (c:%0.02f, t:%0.02f)", __PRETTY_FUNCTION__, _current, _target);
     
     // update current
-    const float max = 360.0f/100.0f;
+    const float max = 180.0f/_refresh_rate;
     float step = (float)(_target-_current);
     if(fabs(step)<0.1f)
         step=0.0f;
@@ -56,12 +62,13 @@ void RudderNodelet::timerCb(const ros::TimerEvent& event) {
         step = (1.0f*max);
     
 //     NODELET_DEBUG("%s: step corr(%0.02f)", __PRETTY_FUNCTION__, step);
-    {
-        _current += step;
+    _current += step;
+
+    if(_show_more) {
         if((fabs(step)<0.1f) && !_done) {
             _t1 = ros::Time::now();
             ros::Duration spent = _t1-_t0;
-            NODELET_DEBUG("%s: time spent (%ds %03dms)", __PRETTY_FUNCTION__, (int)spent.sec, (int)(spent.nsec/1e6));
+            NODELET_INFO("%s: time spent (%ds %03dms)", __PRETTY_FUNCTION__, (int)spent.sec, (int)(spent.nsec/1e6));
             _done = true;
         }
     }

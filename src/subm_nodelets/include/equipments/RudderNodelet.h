@@ -20,13 +20,18 @@ private:
     ros::Publisher _pub;
     ros::Subscriber _sub;
     
+    // fundamental member
     float _current;
     float _target;
+
+    // parameters
+    bool _show_more;
+    int _refresh_rate;
     
+    // time computation
     ros::Time _t0;
     ros::Time _t1;
     bool _done;
-    
 };
 
 } // namespace equipments
