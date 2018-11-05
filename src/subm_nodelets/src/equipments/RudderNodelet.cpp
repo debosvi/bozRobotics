@@ -60,8 +60,8 @@ void RudderNodelet::timerCb(const ros::TimerEvent& event) {
         _current += step;
         if((fabs(step)<0.1f) && !_done) {
             _t1 = ros::Time::now();
-            uint64_t spent = _t1.toNSec()-_t0.toNSec();
-            NODELET_DEBUG("%s: time spent (%lldms)", __PRETTY_FUNCTION__, (long long int)(spent/1e6));
+            ros::Duration spent = _t1-_t0;
+            NODELET_DEBUG("%s: time spent (%ds %03dms)", __PRETTY_FUNCTION__, (int)spent.sec, (int)(spent.nsec/1e6));
             _done = true;
         }
     }
