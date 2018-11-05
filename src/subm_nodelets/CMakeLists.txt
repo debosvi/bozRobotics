@@ -7,8 +7,9 @@ project(subm_nodelets)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED
-#     subm_libs 
+find_package(catkin REQUIRED COMPONENTS
+    message_generation
+    roscpp
     nodelet
     )
 
@@ -76,6 +77,13 @@ set(INCLUDE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
 #   std_msgs  # Or other packages containing msgs
 # )
 
+###############################################################################
+add_message_files(DIRECTORY src/msg)
+generate_messages(
+  DEPENDENCIES
+  std_msgs  # Or other packages containing msgs
+)
+
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
@@ -108,7 +116,7 @@ set(INCLUDE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
 catkin_package(
     INCLUDE_DIRS ${INCLUDE_ROOT_PATH}
 #     LIBRARIES ${PROJECT_NAME}
-#  CATKIN_DEPENDS other_catkin_pkg
+#     CATKIN_DEPENDS message_runtime roscpp
 #  DEPENDS system_lib
 )
 
